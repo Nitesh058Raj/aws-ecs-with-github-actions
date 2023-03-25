@@ -1,0 +1,17 @@
+{
+  "name": "express-init",
+  "version": "1.0.0",
+  "description": "express init for another repo - ecs-testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "Nitesh Raj",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
