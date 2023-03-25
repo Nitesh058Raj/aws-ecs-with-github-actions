@@ -34,14 +34,17 @@ jobs:
        - name: Login to AWS ECR
          id: login-ecr                            # store as var like ansible
          uses: aws-actions/amazon-ecr-login@v1
-
+         
+     #  - name : Manual approch
+     #    run: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 718871632185.dkr.ecr.ap-south-1.amazonaws.com
+         
        - name: Build and push Docker image
          id: build-image
          uses: docker/build-push-action@v2
          with:
            context: .
            push: true
-           tags: hello-repository:${{ github.sha }}   # sha will generate unique tag every time
+           tags: 718871632185.dkr.ecr.ap-south-1.amazonaws.com/hello-repository:${{ github.sha }}   # sha will generate unique tag every time
            
           
           
