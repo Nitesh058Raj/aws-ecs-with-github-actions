@@ -55,9 +55,9 @@ jobs:
          run: |
            cd terra-ecs
            
-      # - name: Terraform Plan  
-      #   run: |
-      #     terraform plan
+       - name: Terraform Init
+         run: |
+           terraform init
            
        - name: Terraform apply
          env:
