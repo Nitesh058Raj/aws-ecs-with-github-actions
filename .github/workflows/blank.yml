@@ -55,23 +55,16 @@ jobs:
          run: |
            cd terra-ecs
            
-       - name: Deploy to Fargate
-         uses: hashicorp/terraform-github-actions@master
-         with:
-           tf_actions_version: 0.14.0
-           tf_working_dir: terra-ecs
-           tf_action: "apply"
+       - name: Terraform Plan  
+         run: |
+           terraform plan
+           
+       - name: Terraform apply
          env:
            AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
            AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
            REPO_NAME: ${{ secrets.REPO_NAME }}
            TAG: ${{ github.sha }}
-           
-       - name: Terraform Plan  
          run: |
-           terraform plan
-       
-       - name: Terraform apply
-         run: |
-           terraform apply --auto-approve
+          terraform apply -var=${TAG} -var=${AWS_ACCESS_KEY} -var=${AWS_SECRET_KEY} --auto-approve -var=${REPO_NAME} 
           
