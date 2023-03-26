@@ -37,7 +37,7 @@ jobs:
          
      #  - name : Manual approch
      #    run: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <REPO_NAME>
-      
+          
        - name: Set ID variable
          run: |
            echo "::set-env name=id::${{ github.sha }}"
