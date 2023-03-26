@@ -37,19 +37,24 @@ jobs:
          
      #  - name : Manual approch
      #    run: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <REPO_NAME>
-          
-       - name: Set ID variable
+       - name: Var
          run: |
-           echo "::set-env name=id::${{ github.sha }}"
-           echo "ID set to ${{ github.sha }}"
+           export TAG=${{ github.sha }}
+          
+  #     - name: Set ID variable
+   #      run: |
+    #       echo "::set-env name=id::${{ github.sha }}"
+     #      echo "ID set to ${{ github.sha }}"
 
        - name: Build and push Docker image
          id: build-image
+         env:
+           ID: ${{ env.TAG }}
          uses: docker/build-push-action@v2
          with:
            context: .
            push: false
-           tags: ${{ secrets.REPO_NAME }}:${{ env.id }}   # sha will generate unique tag every time
+           tags: ${{ secrets.REPO_NAME }}:${ID}   # sha will generate unique tag every time
        
        - name: Changing Dir
          run: |
@@ -65,7 +70,7 @@ jobs:
            AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
            AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
            REPO_NAME: ${{ secrets.REPO_NAME }}
-           TAG: ${{ env.id }}
+           TAG: ${{ env.TAG }}
            
        - name: Terraform Plan  
          run: |
