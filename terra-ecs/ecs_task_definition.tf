@@ -26,7 +26,9 @@ resource "aws_ecs_task_definition" "express_task_definition" {
             }
         }
     ])
-
+    lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
