@@ -20,10 +20,6 @@ jobs:
        - name: Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
          uses: actions/checkout@v3
 
-      # If there is no Infra 
-      # - name: Run Terraform to create Infra
-      #   run: terraform apply
-   
        - name: Configure AWS credentials
          uses: aws-actions/configure-aws-credentials@v1
          with:
@@ -34,14 +30,6 @@ jobs:
        - name: Login to AWS ECR
          id: login-ecr                            # store as var like ansible
          uses: aws-actions/amazon-ecr-login@v1
-         
-     #  - name : Manual approch
-     #    run: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <REPO_NAME>
-          
-  #     - name: Set ID variable
-   #      run: |
-    #       echo "::set-env name=id::${{ github.sha }}"
-     #      echo "ID set to ${{ github.sha }}"
 
        - name: Build and push Docker image
          id: build-image
@@ -58,5 +46,5 @@ jobs:
            REPO_NAME: ${{ secrets.REPO_NAME }}
            TAG: ${{ github.sha }}
          run: |
-          cd terra-ecs && terraform init && terraform state pull > empty.tfstate && terraform destroy -state=empty.tfstate -var="AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" -var="AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}" -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}" --auto-approve -input=false && terraform apply -var="AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" -var="AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}" -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}"  --auto-approve 
+          cd terra-ecs && terraform init && terraform apply -var="AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" -var="AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}" -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}"  --auto-approve 
           
