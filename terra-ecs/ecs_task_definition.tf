@@ -55,11 +55,3 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
     policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
     role = aws_iam_role.express_task_role.name
 }
-
-variable "repo_name" {
-  default = "${env.REPO_NAME}"
-}
-
-variable "tag" {
-  default = "${env.TAG}"
-}
