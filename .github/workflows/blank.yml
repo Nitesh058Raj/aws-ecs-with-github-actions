@@ -31,9 +31,9 @@ jobs:
            aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
            aws-region: ap-south-1
 
-       - name: Login to AWS ECR
-         id: login-ecr                            # store as var like ansible
-         uses: aws-actions/amazon-ecr-login@v1
+    #   - name: Login to AWS ECR
+     #    id: login-ecr                            # store as var like ansible
+     #    uses: aws-actions/amazon-ecr-login@v1
          
      #  - name : Manual approch
      #    run: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <REPO_NAME>
@@ -43,8 +43,8 @@ jobs:
          uses: docker/build-push-action@v2
          with:
            context: .
-           push: false
-           tags: ${{ secrets.REPO_NAME }}:${{ github.sha }}   # sha will generate unique tag every time
+           push: true
+           tags: ${{ secrets.REPO_NAME }}:v1   # sha will generate unique tag every time
            
           
           
