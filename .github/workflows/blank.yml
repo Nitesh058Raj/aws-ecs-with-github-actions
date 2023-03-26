@@ -43,7 +43,7 @@ jobs:
          uses: docker/build-push-action@v2
          with:
            context: .
-           push: true
+           push: false
            tags: ${{ secrets.REPO_NAME }}:${{ github.sha }}   # sha will generate unique tag every time
            
           
