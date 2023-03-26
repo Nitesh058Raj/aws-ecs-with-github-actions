@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "express_task_definition" {
             image = "${var.REPO_NAME}:${var.TAG}"
             portMappings = [
                 {
-                    containerPort = 80
+                    containerPort = 3000
                     protocol = "tcp"
                 }
             ],
