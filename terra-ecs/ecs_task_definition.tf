@@ -9,7 +9,7 @@ resource "aws_ecs_task_definition" "express_task_definition" {
     container_definitions = jsonencode([
         {
             name = "express-container"
-            image = "${repo_name}:${tag}"
+            image = "${var.REPO_NAME}:${var.TAG}"
             portMappings = [
                 {
                     containerPort = 80
