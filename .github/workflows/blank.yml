@@ -43,8 +43,26 @@ jobs:
          uses: docker/build-push-action@v2
          with:
            context: .
-           push: true
-           tags: ${{ secrets.REPO_NAME }}:v1   # sha will generate unique tag every time
+           push: false
+           tags: ${{ secrets.REPO_NAME }}:${{ github.sha }}   # sha will generate unique tag every time
+       
+       - name: Changing Dir
+         run: |
+           cd Terraform
            
-          
+       - name: Terraform Init
+         uses: hashicorp/setup-terraform@v1
+         with:
+           terraform_version: 1.1.0
+         env:
+           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+           AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+       
+       - name: Terraform Plan  
+         run: |
+           terraform plan
+       
+       - name: Terraform apply
+         run: |
+           terraform apply --auto-approve
           
