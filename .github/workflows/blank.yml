@@ -66,5 +66,5 @@ jobs:
            REPO_NAME: ${{ secrets.REPO_NAME }}
            TAG: ${{ github.sha }}
          run: |
-          terraform apply -var=${TAG} -var=${AWS_ACCESS_KEY} -var=${AWS_SECRET_KEY} --auto-approve -var=${REPO_NAME} 
+          terraform apply -var="AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" -var="AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}" -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}"  --auto-approve 
           
