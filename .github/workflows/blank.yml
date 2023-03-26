@@ -48,7 +48,7 @@ jobs:
        
        - name: Changing Dir
          run: |
-           cd terr-ecs
+           cd terra-ecs
            
        - name: Terraform Init
          uses: hashicorp/setup-terraform@v1
