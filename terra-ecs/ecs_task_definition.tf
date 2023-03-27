@@ -19,7 +19,7 @@ resource "aws_ecs_task_definition" "express_task_definition" {
             logConfiguration = {
                 logDriver = "awslogs",
                 options = {
-                    "awslogs-region" = "us-east-1",
+                    "awslogs-region" = "ap-south-1",
                     "awslogs-group"  = "ecs_express",
                     "awslogs-stream-prefix" = "ecs"
                 }
