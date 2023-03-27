@@ -4,7 +4,7 @@ name: CI/CD
 # Triggers the workflow(pipeline)
 on:
   push:
-    branches: "main"  # main branch ignored 
+    branches-ignore: "main"  # main branch ignored 
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -44,5 +44,8 @@ jobs:
            REPO_NAME: ${{ secrets.REPO_NAME }}
            TAG: ${{ github.sha }}
          run: |
-          cd terra-ecs && terraform init -reconfigure && terraform apply --auto-approve 
+          cd terra-ecs
+          terraform init 
+          terraform plan  -no-color
+          terraform apply --auto-approve 
           
