@@ -1,4 +1,12 @@
 terraform {
+    backend "s3" {
+        bucket = "cc-tf-state-backend-ci-cd"
+        key = "tf-infra/terraform.tfstate"
+        region = "ap-south-1"
+        dynamodb_table = "terraform-state-locking"
+        encrypt = true
+    }
+    
     required_providers {
         aws = {
             source = "hashicorp/aws"
@@ -14,6 +22,6 @@ provider "aws" {
 }
 
 module "tf-state" {
-  source = "./modules/tf-state"
-  bucket_name = "cc-tf-state-backend-ci-cd"
+    source = "./modules/tf-state"
+    bucket_name = "cc-tf-state-backend-ci-cd"
 }
