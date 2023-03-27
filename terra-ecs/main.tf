@@ -1,15 +1,19 @@
 terraform {
     required_providers {
-        myaws = {
+        aws = {
             source = "hashicorp/aws"
             version = "~> 4.47.0"
-            configuration_aliases = [myaws.alternate]
         }
     }
 }
 
-provider "myaws" {
+provider "aws" {
     region = "ap-south-1"
     access_key = var.AWS_ACCESS_KEY
     secret_key = var.AWS_SECRET_KEY
+}
+
+module "tf-state" {
+  source = "./modules/tf-state"
+  bucket_name = "cc-tf-state-backend-ci-cd"
 }
