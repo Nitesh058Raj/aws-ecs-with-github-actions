@@ -46,5 +46,6 @@ jobs:
          run: |
           cd terra-ecs
           terraform init 
-          terraform apply --auto-approve 
+          terraform destroy --auto-approve
+          #terraform apply -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}" --auto-approve 
           
