@@ -44,5 +44,5 @@ jobs:
            REPO_NAME: ${{ secrets.REPO_NAME }}
            TAG: ${{ github.sha }}
          run: |
-          cd terra-ecs && terraform init && terraform apply --auto-approve 
+          cd terra-ecs && terraform init -reconfigure && terraform apply --auto-approve 
           
