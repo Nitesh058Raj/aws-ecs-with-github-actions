@@ -1,9 +1,9 @@
 terraform {
     backend "s3" {
-        bucket = "cc-tf-state-backend-ci-cd"
+        bucket = "cc-tf-state-backend-cicd"
         key = "tf-infra/terraform.tfstate"
-        region = "us-east-1"
-        dynamodb_table = "terraform-state-locking"
+        region = "ap-south-1"
+        dynamodb_table = "terraform-state-locking2"
         encrypt = true
     }
     
@@ -23,5 +23,5 @@ provider "aws" {
 
 module "tf-state" {
     source = "./modules/tf-state"
-    bucket_name = "cc-tf-state-backend-ci-cd"
+    bucket_name = "cc-tf-state-backend-cicd"
 }
