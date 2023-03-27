@@ -4,7 +4,7 @@ name: CI/CD
 # Triggers the workflow(pipeline)
 on:
   push:
-    branches-ignore: "main"  # main branch ignored 
+    branches: "main"  # main branch ignored 
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -44,5 +44,5 @@ jobs:
            REPO_NAME: ${{ secrets.REPO_NAME }}
            TAG: ${{ github.sha }}
          run: |
-          cd terra-ecs && terraform init && terraform apply -var="AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" -var="AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}" -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}"  --auto-approve 
+          cd terra-ecs && terraform init && terraform apply --auto-approve 
           
