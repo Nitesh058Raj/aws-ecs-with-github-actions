@@ -46,6 +46,5 @@ jobs:
          run: |
           cd terra-ecs
           terraform init 
-          terraform plan  -no-color
-          terraform apply --auto-approve 
+          terraform destroy --auto-approve 
           
