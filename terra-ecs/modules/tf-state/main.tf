@@ -6,3 +6,7 @@ terraform {
         }
     }
 }
+
+provision {
+    region = "ap-south-1"
+}
