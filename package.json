@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "express init for ecs-testing",
   "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "keywords": [
     "express"
   ],
