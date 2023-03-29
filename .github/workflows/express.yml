@@ -4,7 +4,7 @@ name: CI/CD
 # Triggers the workflow(pipeline)
 on:
   push:
-    branches-ignore: "main"  # main branch ignored 
+    branches: "main"  # main branch ignored 
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
