@@ -1,4 +1,5 @@
 terraform {
+/*
     backend "s3" {
         bucket = "cc-tf-state-backend-cicd"
         key = "tf-infra/terraform.tfstate"
@@ -6,7 +7,7 @@ terraform {
         dynamodb_table = "terraform-state-locking"
         encrypt = true
     }
-    
+  */  
     required_providers {
         aws = {
             source = "hashicorp/aws"
