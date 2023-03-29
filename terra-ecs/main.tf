@@ -3,7 +3,7 @@ terraform {
         bucket = "cc-tf-state-backend-cicd"
         key = "tf-infra/terraform.tfstate"
         region = "ap-south-1"
-        dynamodb_table = "terraform-state-locking2"
+        dynamodb_table = "terraform-state-locking"
         encrypt = true
     }
     
