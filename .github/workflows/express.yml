@@ -4,7 +4,7 @@ name: CI/CD
 # Triggers the workflow(pipeline)
 on:
   push:
-    branches-ignore: "main"  # main branch ignored 
+    branches: "main"  # main branch ignored 
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -36,17 +36,18 @@ jobs:
            context: .
            push: true
            tags: ${{ secrets.REPO_NAME }}:${{ github.sha }}   # sha will generate unique tag every time
-             
-       # First time only      
-       - name: Terraform apply for backend resources
-         env:
-           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-           AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-         run: |
-          cd terraform-backend-resources
-          terraform init 
-          terraform apply --auto-approve
-          
+         
+  #     # First time only      
+   #    - name: Terraform apply for backend resources
+    #     env:
+     #      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      #     AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+       #  run: |
+        #  cd terraform-backend-resources
+         # terraform init 
+          #terraform apply --auto-approve
+         
+         
        - name: Terraform apply
          env:
            AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
