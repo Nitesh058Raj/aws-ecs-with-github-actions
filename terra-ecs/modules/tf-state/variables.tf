@@ -6,12 +6,3 @@ variable "bucket_name" {
     error_message = "Bucket Name must not be empty and must follow S3 naming rules."
   }
 }
-variable "AWS_ACCESS_KEY" {
-  type        = string
-  default = ""
-}
-
-variable "AWS_SECRET_KEY" {
-  type        = string
-  default = ""
-}
