@@ -11,8 +11,9 @@ on:
 
 
 jobs:
-  deploy:
+  ECS-deploy:
     runs-on: ubuntu-latest
+    # you can also define env here for env-vars
     
     steps:
        - name: Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -57,6 +58,6 @@ jobs:
          run: |
           cd terra-ecs
           terraform init 
-          terraform destroy --auto-approve
-          terraform apply -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}" --auto-approve 
+          terraform destroy --auto-approve  # for removing existing Infra on aws
+#          terraform apply -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}" --auto-approve 
           
