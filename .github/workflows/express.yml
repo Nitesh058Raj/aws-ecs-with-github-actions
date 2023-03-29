@@ -38,7 +38,7 @@ jobs:
            push: true
            tags: ${{ secrets.REPO_NAME }}:${{ github.sha }}   # sha will generate unique tag every time
          
-#       # First time only      
+#       # Only for backend resources (S3 and Dynamodb table) to create     
 #       - name: Terraform apply for backend resources
 #         env:
 #           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}

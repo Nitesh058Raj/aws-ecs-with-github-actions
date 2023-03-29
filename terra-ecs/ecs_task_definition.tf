@@ -2,8 +2,8 @@ resource "aws_ecs_task_definition" "express_task_definition" {
     family = "task-express"
     execution_role_arn = aws_iam_role.express_task_role.arn
     network_mode = "awsvpc"
-    cpu = "256"
-    memory = "512"
+    cpu = "128"
+    memory = "256"
     requires_compatibilities = ["FARGATE"]
 
     container_definitions = jsonencode([

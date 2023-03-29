@@ -1,4 +1,4 @@
-# Base image
+# Base image (alpine --> minimal )
 FROM node:alpine3.16
 
 # Working directory
@@ -10,7 +10,7 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy source code
+# Copy source code(in our case index.js)
 COPY index.js .
 
 # Expose port

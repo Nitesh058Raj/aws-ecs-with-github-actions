@@ -1,11 +1,11 @@
 variable "REPO_NAME" {
   type        = string
-  default = ""
+  default = "" # if var is not provided it will be = ""
 }
 
 variable "TAG" {
   type        = string
-  default = ""
+  default = "" 
 }
 
 variable "AWS_ACCESS_KEY" {
