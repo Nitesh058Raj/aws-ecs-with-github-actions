@@ -4,7 +4,7 @@ name: CI/CD
 # Triggers the workflow(pipeline)
 on:
   push:
-    branches-ignore: "main"  # main branch ignored 
+    branches: "main"  # main branch ignored 
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -26,38 +26,38 @@ jobs:
            aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
            aws-region: ap-south-1
 
-       - name: Login to AWS ECR
-         id: login-ecr                            # store as var like ansible
-         uses: aws-actions/amazon-ecr-login@v1
+ #      - name: Login to AWS ECR
+  #       id: login-ecr                            # store as var like ansible
+  #       uses: aws-actions/amazon-ecr-login@v1
 
-       - name: Build and push Docker image
-         id: build-image
-         uses: docker/build-push-action@v2
-         with:
-           context: .
-           push: true
-           tags: ${{ secrets.REPO_NAME }}:${{ github.sha }}   # sha will generate unique tag every time
+ #      - name: Build and push Docker image
+ #        id: build-image
+ #        uses: docker/build-push-action@v2
+ #        with:
+ #          context: .
+ #          push: true
+ #          tags: ${{ secrets.REPO_NAME }}:${{ github.sha }}   # sha will generate unique tag every time
          
 #       # Only for backend resources (S3 and Dynamodb table) to create     
-#       - name: Terraform apply for backend resources
-#         env:
-#           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-#           AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-#         run: |
-#          cd terraform-backend-resources
-#          terraform init 
-#          terraform apply --auto-approve
-         
-         
-       - name: Terraform apply
+       - name: Terraform apply for backend resources
          env:
            AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
            AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-           REPO_NAME: ${{ secrets.REPO_NAME }}
-           TAG: ${{ github.sha }}
          run: |
-          cd terra-ecs
+          cd terraform-backend-resources
           terraform init 
-          terraform destroy --auto-approve  # for removing existing Infra on aws
+          terraform apply --auto-approve
+         
+         
+    #   - name: Terraform apply
+    #     env:
+     #      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+     #      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+     #      REPO_NAME: ${{ secrets.REPO_NAME }}
+     #      TAG: ${{ github.sha }}
+     #    run: |
+     #     cd terra-ecs
+     #     terraform init 
+     #     terraform destroy --auto-approve  # for removing existing Infra on aws
 #          terraform apply -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}" --auto-approve 
           
