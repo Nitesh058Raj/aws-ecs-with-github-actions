@@ -1,20 +1,15 @@
 
-name: CI/CD
-
-# Triggers the workflow(pipeline)
+name: AWS ECS Deployment
 on:
   push:
-    branches: "main"  # main branch ignored 
+    branches: "branch-name"  
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-
 jobs:
-  ECS-deploy:
+  AWS-ECS-Infrastructure-Deployment:
     runs-on: ubuntu-latest
-    # you can also define env here for env-vars
-    
     steps:
        - name: Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
          uses: actions/checkout@v3
@@ -26,19 +21,22 @@ jobs:
            aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
            aws-region: ap-south-1
 
- #      - name: Login to AWS ECR
-  #       id: login-ecr                            # store as var like ansible
-  #       uses: aws-actions/amazon-ecr-login@v1
+       - name: Login to AWS ECR
+         id: login-ecr                            
+         uses: aws-actions/amazon-ecr-login@v1
 
- #      - name: Build and push Docker image
- #        id: build-image
- #        uses: docker/build-push-action@v2
- #        with:
- #          context: .
- #          push: true
- #          tags: ${{ secrets.REPO_NAME }}:${{ github.sha }}   # sha will generate unique tag every time
+       - name: Build and push Docker image
+         id: build-image
+         uses: docker/build-push-action@v2
+         with:
+           context: .
+           push: true
+           tags: ${{ secrets.REPO_NAME }}:${{ github.sha }}   # sha will generate unique tag every time
+
          
-#       # Only for backend resources (S3 and Dynamodb table) to create     
+       # Only for backend resources (S3 and Dynamodb table) to create
+       # Make sure that the terraform-backend resources are applied only when necessary
+       # when the infrastructure doesn't already exist
        - name: Terraform apply for backend resources
          env:
            AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
@@ -48,16 +46,19 @@ jobs:
           terraform init 
           terraform apply --auto-approve
          
-         
-    #   - name: Terraform apply
-    #     env:
-     #      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-     #      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-     #      REPO_NAME: ${{ secrets.REPO_NAME }}
-     #      TAG: ${{ github.sha }}
-     #    run: |
-     #     cd terra-ecs
-     #     terraform init 
-     #     terraform destroy --auto-approve  # for removing existing Infra on aws
-#          terraform apply -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}" --auto-approve 
+
+       # Be cautious when using --auto-approve in production environments, as it can lead to unintended changes.
+       # In practice, consider reviewing changes before approval.
+       # terraform destroy command is for cleanup purposes.  
+       - name: Terraform apply
+         env:
+           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+           AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+           REPO_NAME: ${{ secrets.REPO_NAME }}
+           TAG: ${{ github.sha }}
+         run: |
+          cd terra-ecs
+          terraform init 
+          terraform destroy --auto-approve  # for removing existing Infra on aws
+          terraform apply -var="REPO_NAME=${{ secrets.REPO_NAME }}" -var="TAG=${{ github.sha }}" --auto-approve 
           
