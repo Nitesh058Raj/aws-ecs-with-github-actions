@@ -22,15 +22,40 @@ Before you begin, make sure you have the following:
 
 ## Usage
 
-1. **AWS Configuration**: Set up your AWS credentials as GitHub secrets:
+**AWS Configuration**: Set up your AWS credentials as GitHub secrets:
    - `AWS_ACCESS_KEY`: Your AWS access key.
    - `AWS_SECRET_KEY`: Your AWS secret key.
    - `AWS_REGION`: Your preferred AWS region.
    - `REPO_NAME`: ECR Repository name
 
-2. **Terraform Backend Resources**: Navigate to the `terraform-backend-resources` directory and apply the Terraform configuration to create backend resources.
 
-   ```sh
-   cd terraform-backend-resources
-   terraform init
-   terraform apply --auto-approve
+### GitHub Actions
+On every push to the repository's main branch or manually triggering the workflow, the GitHub Actions workflow defined in express.yml will run, automating the deployment process. 
+Every push on the specified branch (branch-name as configured in express.yml) will recreate the infrastructure on AWS and deploy the container using AWS ECS.
+
+
+### ECS Infrastructure
+Navigate to the terr-ecs directory and apply the Terraform configuration to deploy ECS infrastructure.
+```bash
+cd terr-ecs
+terraform init
+terraform apply --auto-approve
+```
+
+### Docker Container
+Build the Docker container for your application using the provided Dockerfile. (This project has a simple express app that will listen on port 3000)
+<hr/>
+
+### Output
+You can see the application with the public IP from ECS. (https://public_ip:3000).
+You will see this message on the website: `Hello, Express is working fine... :)`
+
+### Customization
+Feel free to customize the Terraform configurations, Dockerfile, and application code to suit your specific needs.
+
+### Acknowledgments
+- [Terraform](https://www.terraform.io/)
+- [GitHub Actions](https://github.com/features/actions)
+
+Feel free to contribute to this repository by submitting issues or pull requests.
+
